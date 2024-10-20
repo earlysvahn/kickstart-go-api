@@ -1,0 +1,40 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+*.test
+create-go-api
+
+# Build directories
+/bin/
+/dist/
+/build/
+
+# Output of `go install`
+/out/
+
+# Go modules
+/go.mod
+/go.sum
+
+# Go workspace file
+/go.work
+
+# IntelliJ project files
+.idea/
+
+# VS Code files
+.vscode/
+
+# macOS system files
+.DS_Store
+
+# Log files
+*.log
+
+# Coverage reports
+*.out
+
+# Environment variables
+.env
