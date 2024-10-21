@@ -34,7 +34,7 @@ import (
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/ping", handlers.Ping).Methods("GET")
+	r.HandleFunc("/", handlers.Ping).Methods("GET")
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
@@ -50,7 +50,7 @@ import "net/http"
 import "encoding/json"
 
 func Ping(w http.ResponseWriter, r *http.Request) {
-	response := map[string]string{"message": "pong"}
+	response := map[string]string{"message": "Hello from mux!"}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
 }`

@@ -35,7 +35,7 @@ import (
 
 func main() {
 	r := chi.NewRouter()
-	r.Get("/ping", handlers.Ping)
+	r.Get("/", handlers.Ping)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
@@ -51,7 +51,7 @@ import "net/http"
 import "encoding/json"
 
 func Ping(w http.ResponseWriter, r *http.Request) {
-	response := map[string]string{"message": "pong"}
+	response := map[string]string{"message": "Hello from chi!"}
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(response)
 }`

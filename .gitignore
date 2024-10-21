@@ -4,9 +4,11 @@
 *.so
 *.dylib
 *.test
+
 kickstart-go-api-linux
 kickstart-go-api-macos
 kickstart-go-api.exe
+kickstart-go-api
 
 /bin/
 /dist/

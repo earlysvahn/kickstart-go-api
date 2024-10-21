@@ -4,31 +4,70 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"os"
+	"strings"
 
 	"github.com/earlysvahn/kickstart-go-api/internal/routers"
+	"github.com/earlysvahn/kickstart-go-api/internal/utils"
+	"github.com/manifoldco/promptui"
 )
 
-func main() {
-	var router string
-	flag.StringVar(&router, "router", "mux", "Choose router for your Go API project: gin, mux, or chi")
+var version = "1.0.6"
 
-	if len(os.Args) >= 4 {
-		err := flag.CommandLine.Set("router", os.Args[3])
-		if err != nil {
-			log.Fatalf("Failed to set router flag: %v", err)
-		}
+func promptUser(prompt string) string {
+	promptTemplate := promptui.Prompt{
+		Label: prompt,
+	}
+	response, err := promptTemplate.Run()
+	if err != nil {
+		log.Fatalf("Failed to read input: %v", err)
+	}
+	return strings.TrimSpace(response)
+}
+
+func selectRouter() string {
+	prompt := promptui.Select{
+		Label: "Choose router",
+		Items: []string{"gin", "mux", "chi"},
 	}
 
+	_, router, err := prompt.Run()
+	if err != nil {
+		log.Fatalf("Failed to select router: %v", err)
+	}
+
+	return router
+}
+
+func main() {
+	showVersion := flag.Bool("version", false, "Show the current version of the tool")
+	var router string
+	flag.StringVar(&router, "router", "", "Choose router for your Go API project: gin, mux, or chi")
 	flag.Parse()
 
-	fmt.Printf("Router flag: %s\n", router)
+	if *showVersion {
+		updateAvailable, latestVersion := utils.CheckForUpdates(version)
+		fmt.Printf("Kickstart Go API version: %s\n", version)
 
-	if len(flag.Args()) == 0 {
-		log.Fatal("Please provide a project name")
+		if updateAvailable {
+			fmt.Printf("A new version is available: %s\n", latestVersion)
+			fmt.Println("Update your tool with:")
+			fmt.Println("go install github.com/earlysvahn/kickstart-go-api@latest")
+		}
+		return
 	}
-	projectName := flag.Args()[0]
 
+	var projectName string
+	if len(flag.Args()) > 0 {
+		projectName = flag.Args()[0]
+	} else {
+		projectName = promptUser("Please enter the project name")
+	}
+
+	if router == "" {
+		router = selectRouter()
+	}
+
+	router = strings.ToLower(router)
 	switch router {
 	case "gin":
 		fmt.Println("Creating project with Gin router")

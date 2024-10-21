@@ -34,7 +34,7 @@ import (
 
 func main() {
 	router := gin.Default()
-	router.GET("/ping", handlers.Ping)
+	router.GET("/", handlers.Ping)
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
@@ -49,6 +49,6 @@ func ginHandlersGoContent() string {
 import "github.com/gin-gonic/gin"
 
 func Ping(c *gin.Context) {
-	c.JSON(200, gin.H{"message": "pong"})
+	c.JSON(200, gin.H{"message": "Hello from gin!"})
 }`
 }
