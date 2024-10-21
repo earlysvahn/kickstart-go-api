@@ -1,4 +1,4 @@
-name: Test Build Workflow
+name: Verify build
 
 on:
   workflow_dispatch:
@@ -22,6 +22,20 @@ jobs:
       uses: actions/setup-go@v4
       with:
         go-version: 1.22.2
+
+    - name: Cache Go modules
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+
+    - name: Install Dependencies
+      run: |
+        go mod download
 
     - name: Build binary
       run: |
