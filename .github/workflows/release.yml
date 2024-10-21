@@ -25,6 +25,7 @@ jobs:
         go-version: 1.19
 
     - name: Build binary
+      working-directory: ./
       run: |
         GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o kickstart-go-api-${{ matrix.goos }}-${{ matrix.goarch }}
 
