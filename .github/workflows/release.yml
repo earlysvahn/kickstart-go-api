@@ -28,7 +28,7 @@ jobs:
         GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o kickstart-go-api-${{ matrix.goos }}-${{ matrix.goarch }}
 
     - name: Upload release asset
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3   # Updated to v3
       with:
         name: kickstart-go-api-${{ matrix.goos }}-${{ matrix.goarch }}
         path: kickstart-go-api-${{ matrix.goos }}-${{ matrix.goarch }}
@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Download release assets
-      uses: actions/download-artifact@v2
+      uses: actions/download-artifact@v3   # Updated to v3
 
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v1
@@ -47,5 +47,5 @@ jobs:
           kickstart-go-api-darwin-amd64
           kickstart-go-api-linux-amd64
           kickstart-go-api-windows-amd64.exe
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
