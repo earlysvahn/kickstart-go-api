@@ -36,14 +36,19 @@ jobs:
     - name: Create a tag (if needed)
       if: github.event_name == 'workflow_dispatch'
       run: |
-        TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
+        TAG=$(git describe --tags `git rev-list --tags --max-count=1` 2>/dev/null || echo "")
+
         if [ -z "$TAG" ]; then
           NEW_TAG="v1.0.0"
         else
           NEW_TAG=$(echo $TAG | awk -F. '{$NF = $NF + 1;} 1' | sed 's/ /./g')
         fi
+
+        echo "Creating new tag: $NEW_TAG"
         git tag $NEW_TAG
         git push origin $NEW_TAG
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build binary
       run: |
