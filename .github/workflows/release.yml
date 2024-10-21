@@ -24,8 +24,14 @@ jobs:
       with:
         go-version: 1.22.2
 
+    # DEBUG DEBUG DEBUG
+    - name: Show current directory and list files
+      run: |
+        pwd
+        ls -al
+
     - name: Build binary
-      working-directory: ./
+      working-directory: /home/runner/work/kickstart-go-api/kickstart-go-api
       run: |
         GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} go build -o kickstart-go-api-${{ matrix.goos }}-${{ matrix.goarch }}
 
