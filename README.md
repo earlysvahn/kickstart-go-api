@@ -89,7 +89,7 @@ This will show you the current installed version and notify you if a new version
 
 ## Example Usage
 
-Here’s how you can use `kickstart-go-api` to create a new project interactively:
+Here's how you can use `kickstart-go-api` to create a new project interactively:
 
 ```bash
 $ kickstart-go-api
